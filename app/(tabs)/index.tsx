@@ -1,125 +1,139 @@
-import { Image, StyleSheet, Platform } from "react-native";
-import {
-  Colors,
-  View,
-  Card,
-  Button,
-  Text,
-  Icon,
-} from "react-native-ui-lib";
+import React from "react";
+import { View, StyleSheet, Image } from "react-native";
+import { Card, Text, Button, Icon, Colors } from "react-native-ui-lib";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-const cardImage = require("../../assets/images/card-example.jpg");
+export default function ProductCard() {
+  return (
+    <View style={styles.container}>
+      <Card style={styles.card}>
+        {/* Image Section */}
+        <Card.Section
+          imageSource={{
+            uri: "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png",
+          }}
+          imageStyle={styles.cardImage}
+        />
 
-export default function HomeScreen() {
-  const renderText2 = () => {
-    return (
-      <View paddingV-20 flex paddingH-10>
-        <View row spread>
-          <Text text60 $textDefault>
-            NIC Ice cream
+        {/* Like Icon */}
+        <View style={styles.iconOverlay}>
+          <Button
+            backgroundColor="transparent"
+            iconSource={() => (
+              <AntDesign name="heart" size={24} color={Colors.red30} />
+            )}
+            onPress={() => alert("Liked!")}
+          />
+        </View>
+
+        {/* Text Content */}
+        <View style={styles.cardBody}>
+          <Text text60 style={styles.cardTitle}>
+            Sparx Running Shoe
           </Text>
-          <View row style={styles.ratingContainer}>
-            <Text $white>4.5</Text>
-            <AntDesign name="star" style={styles.starIcon} size={18} color="#ffffff" />
+          <View style={styles.flexContainer}>
+            <Text text80 style={styles.cardSubtitle}>
+              Style: Dark Greenish
+            </Text>
+            <View style={styles.ratingContainer}>
+              <Text style={styles.ratingText}>4.5</Text>
+              <AntDesign name="star" style={styles.starIcon} size={18} />
+            </View>
+          </View>
+
+          <Text text70 style={styles.cardText}>
+            gives possibility to combine the flexibility of tradition and
+            advanced products which last for years.
+          </Text>
+
+          {/* Price and Add to Cart */}
+          <View style={styles.buySection}>
+            <Text style={styles.price}>$100</Text>
+            <Button
+              label="Add to Cart"
+              backgroundColor={Colors.red30}
+              iconSource={() => (
+                <AntDesign name="shoppingcart" size={18} color={Colors.white} />
+              )}
+              onPress={() => alert("Added to Cart")}
+              style={styles.cartButton}
+            />
           </View>
         </View>
-
-        <View row paddingT-8>
-          <Text text85 style={{ fontWeight: "300" }}>
-            Pure Veg
-          </Text>
-          <Text text85 style={{ fontWeight: "300", paddingLeft: 10 }}>
-            Ice cream
-          </Text>
-          <Text text85 style={{ fontWeight: "300", paddingLeft: 10 }}>
-            $200 for 1
-          </Text>
-        </View>
-      </View>
-    );
-  };
-
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <View row marginV-10 paddingH-40 height={230}>
-        <Card
-          flex
-          style={{
-            marginTop: 20,
-            position: "relative", 
-          }}
-          activeOpacity={1}
-          marginR-20
-        >
-          {/* Cart Button */}
-          <Button
-            label="Cart"
-            backgroundColor={Colors.green30} 
-            iconSource={() => <Icon assetName="plus" tintColor="white" />} 
-            style={styles.cartButton}
-            iconOnRight={false}
-            onPress={() => alert("Added to Cart")}
-          />
-
-          <Card.Section
-            flex-3
-            imageSource={cardImage}
-            imageStyle={{ height: "100%" }}
-          />
-          {renderText2()}
-        </Card>
-      </View>
-    </ParallaxScrollView>
+      </Card>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  container: {
+    flex: 1,
+    paddingTop: 200,
+    // padding: 20,
     alignItems: "center",
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  card: {
+    width: "90%",
+    marginVertical: 20,
+    padding: 10,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  cardImage: {
+    height: 200,
+    width: "100%",
   },
-  cartButton: {
+  iconOverlay: {
     position: "absolute",
     top: 10,
     right: 10,
-    zIndex: 1, // Ensure the button is above other components
+    zIndex: 1,
+  },
+  cardBody: {
+    padding: 20,
+  },
+  cardTitle: {
+    fontWeight: "bold",
+  },
+  cardSubtitle: {
+    color: Colors.grey40,
+    marginBottom: 10,
+  },
+  cardText: {
+    marginVertical: 10,
+    color: Colors.grey20,
+  },
+  buySection: {
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  price: {
+    color: Colors.green30,
+    fontWeight: "bold",
+    fontSize: 30,
+  },
+  cartButton: {
     paddingHorizontal: 10,
     paddingVertical: 10,
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+    borderRadius: 5,
   },
   ratingContainer: {
-    
-    backgroundColor: Colors.green10,
-    padding:6,
+    backgroundColor: Colors.green20,
+    padding: 6,
     borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  ratingText: {
+    color: "#fff",
   },
   starIcon: {
     marginLeft: 5,
+    color: "#ffffff",
+  },
+  flexContainer: {
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
